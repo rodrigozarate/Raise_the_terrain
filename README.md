@@ -2,8 +2,10 @@
 Optional project at Holberton School
 ### Requirements
 This program is developed on C
+This program is intended to be used on MAC
 - GCC
 - SDL2
+- XCode
 ### Installation
 Open Terminal
 On Mac OS X, *run* `brew install sdl2`
