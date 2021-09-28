@@ -7,6 +7,7 @@
 /* Format to MAC use */
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include "terrain.h"
 
 /**
 * main - Create a window to dosplay lines
@@ -15,38 +16,77 @@
 * Return: 0
 */
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-
-int main(int argc, char* args[])
+int main(int argc, char **argv)
 {
-	SDL_Window *window = NULL;
-	SDL_Surface *screenSurface = NULL;
+	SDL_Instance instance;
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (argc != 2)
+	{
+		fprintf(stderr, "Usage terrain <file>\n");
+		return (1);
+	}
+
+	if (init_instance(&instance) != 0)
+		return (1);
+
+	while ("Any string")
+	{
+		/* C, M, Y, K */
+		SDL_SetRenderDrawColor(instance.renderer, 0, 0, 0, 0);
+		SDL_RenderClear(instance.renderer);
+		if (poll_events() == 1)
+			break;
+		draw_function(instance);
+
+		SDL_RenderPresent(instance.renderer);
+	}
+	SDL_DestroyRenderer(instance.renderer);
+	SDL_DestroyWindow(instance.window);
+	SDL_Quit();
+	return (0);
+}
+
+/**
+* init_instance - Init window instance
+* @instance: pointer
+* Return: 0
+*/
+
+int init_instance(SDL_Instance *instance)
+{
+
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		printf("Something happened... SDL_Error: %s\n", SDL_GetError());
 		return (1);
 	}
 	else
 	{
-		window = SDL_CreateWindow("SDL2 Isometric", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-		if (window == NULL)
+		instance->window = SDL_CreateWindow("SDL2 Isometric",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		SCREEN_WIDTH,
+		SCREEN_HEIGHT, 0);
+		if (instance->window == NULL)
 		{
-			printf("Window crash... SDL_Error: %s\n", SDL_GetError());
+			printf("Window crash! SDL_Error: %s\n", SDL_GetError());
+			SDL_Quit();
+			return (1);
 		}
 		else
 		{
-			screenSurface = SDL_GetWindowSurface(window);
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format,
-			0x00, 0x00, 0x00));
-			SDL_UpdateWindowSurface(window);
-			SDL_Delay(2000);
+			instance->renderer = SDL_CreateRenderer(
+			instance->window, -1,
+			SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			if (instance->renderer == NULL)
+			{
+				SDL_DestroyWindow(instance->window);
+				printf("Window crash! SDL_Error: %s\n",
+				SDL_GetError());
+				SDL_Quit();
+				return (1);
+			}
 		}
 	}
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-return 0;
+return (0);
 }
