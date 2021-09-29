@@ -10,7 +10,7 @@
 #include "terrain.h"
 
 /**
-* main - Create a window to dosplay lines
+* main - Create a window to display lines
 * @argc: arguments count
 * @args: arguments
 * Return: 0
@@ -26,7 +26,10 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	if (init_instance(&instance) != 0)
+	if (init_instance(&instance, argv[1]) != 0)
+		return (1);
+
+	if (read_file(&instance) != 0)
 		return (1);
 
 	while ("Any string")
@@ -36,13 +39,17 @@ int main(int argc, char **argv)
 		SDL_RenderClear(instance.renderer);
 		if (poll_events() == 1)
 			break;
-		draw_function(instance);
+		draw_function(&instance);
 
 		SDL_RenderPresent(instance.renderer);
 	}
+
+	clear_data(&instance);
+
 	SDL_DestroyRenderer(instance.renderer);
 	SDL_DestroyWindow(instance.window);
 	SDL_Quit();
+
 	return (0);
 }
 
@@ -52,7 +59,7 @@ int main(int argc, char **argv)
 * Return: 0
 */
 
-int init_instance(SDL_Instance *instance)
+int init_instance(SDL_Instance *instance, char *argv)
 {
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -62,7 +69,7 @@ int init_instance(SDL_Instance *instance)
 	}
 	else
 	{
-		instance->window = SDL_CreateWindow("SDL2 Isometric",
+		instance->window = SDL_CreateWindow("SDL2 Isometric4",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		SCREEN_WIDTH,
@@ -88,5 +95,11 @@ int init_instance(SDL_Instance *instance)
 			}
 		}
 	}
-return (0);
+	instance->elevation = argv;
+
+	instance->data = NULL;
+	instance->xstep = 0;
+	instance->ystep = 0;
+
+	return (0);
 }

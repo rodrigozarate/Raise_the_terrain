@@ -6,20 +6,60 @@
 * Return: void
 */
 
-void draw_function(SDL_Instance instance)
+void draw_function(SDL_Instance *instance)
 {
-        SDL_SetRenderDrawColor(instance.renderer, 0x00, 0xFF, 0xFF, 0xFF);
-        SDL_RenderDrawLine(instance.renderer, 10,10, 10,100);
-        SDL_RenderDrawLine(instance.renderer, 10,10, 100,100);
-        SDL_RenderDrawLine(instance.renderer, 10,10, 100,10);
-        SDL_SetRenderDrawColor(instance.renderer, 0xFF, 0x00, 0xFF, 0xFF);
-        SDL_RenderDrawLine(instance.renderer, 100,100, 10,100);
-        SDL_RenderDrawLine(instance.renderer, 100,100, 100,10);
-        SDL_RenderDrawLine(instance.renderer, 100,100, 200,200);
-        SDL_SetRenderDrawColor(instance.renderer, 0xFF, 0xFF, 0x00, 0xFF);
-        SDL_RenderDrawLine(instance.renderer, 200,200, 200,300);
-        SDL_RenderDrawLine(instance.renderer, 200,200, 300,200);
-        SDL_RenderDrawLine(instance.renderer, 200,200, 300,300);
-        SDL_SetRenderDrawColor(instance.renderer, 0xFF, 0xFF, 0xFF, 0x00);
-        SDL_RenderDrawLine(instance.renderer, 300,300, 400,400);
+
+	int i, j;
+	float x, y, z;
+	float centerx;
+	float centery;
+	float inclinationx;
+	float inclinationy;
+	float startx, starty, endx, endy;
+
+	centerx = SCREEN_WIDTH / 2;
+	centery = SCREEN_HEIGHT / 2;
+	inclinationx = 0.7;
+	inclinationy = 0.7;
+
+	SDL_SetRenderDrawColor(instance->renderer, 0x00, 0xFF, 0xFF, 0xFF);
+
+	for (i = 0; i < instance->xstep; i++)
+	{
+		for (j = 0; j < instance->ystep; j++)
+		{
+			x = instance->data[i][j].x;
+			y = instance->data[i][j].y;
+			z = instance->data[i][j].z;
+			startx = (inclinationx * (x - y)) + centerx;
+			starty = ((1 - inclinationy) * (x + y) - z) + centery;
+			if ( i < instance->xstep - 1)
+			{
+				x = instance->data[i + 1][j].x;
+				y = instance->data[i + 1][j].y;
+				z = instance->data[i + 1][j].z;
+				endx = (inclinationx * (x - y)) + centerx;
+				endy = ((1 - inclinationy) * (x + y) - z) +
+					centery;
+				SDL_RenderDrawLine(instance->renderer,
+					startx, starty, endx, endy);
+				printf("%f \n", startx);
+				printf("%f \n", starty);
+				printf("%f \n", endx);
+				printf("%f \n", endy);
+			}
+			if ( i < instance->ystep - 1)
+			{
+				x = instance->data[i + 1][j].x;
+				y = instance->data[i + 1][j].y;
+				z = instance->data[i + 1][j].z;
+				endx = (inclinationx * (x - y)) + centerx;
+				endy = ((1 - inclinationy) * (x + y) - z) +
+					centery;
+				SDL_RenderDrawLine(instance->renderer,
+					startx, starty, endx, endy);
+			}
+		}
+	}
+
 }

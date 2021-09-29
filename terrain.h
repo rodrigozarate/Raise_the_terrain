@@ -47,8 +47,11 @@ typedef struct SDL_Instance
 	point **data;
 } SDL_Instance;
 
-int init_instance(SDL_Instance *);
-void draw_function(SDL_Instance instance);
+int init_instance(SDL_Instance *instance, char *argv);
+void draw_function(SDL_Instance *instance);
+void process_file(SDL_Instance *instance);
+int read_file(SDL_Instance *instance);
+void clear_data(SDL_Instance *instance);
 int poll_events();
 
 #endif /* _TERRAIN_H_ */
