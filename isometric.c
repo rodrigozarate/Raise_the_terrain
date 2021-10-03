@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		/* C, M, Y, K */
 		SDL_SetRenderDrawColor(instance.renderer, 0, 0, 0, 0);
 		SDL_RenderClear(instance.renderer);
-		if (poll_events() == 1)
+		if (poll_events(&instance) == 1)
 			break;
 		draw_function(&instance);
 

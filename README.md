@@ -10,19 +10,34 @@ This program is intended to be used on MAC
 Open Terminal
 On Mac OS X, *run* `brew install sdl2`
 
+#### Compilation
+Link with the gcc -m flag to be able to use the math library
+`gcc -Wall -Werror -Wextra -pedantic *.c -lm $(sdl2-config --cflags --libs) -o terrain`
+
+## USAGE
+`terrain <elevation>`
+There's some sample files:
+elevation_0, elevation_1, elevation_2, elevation_3 and elevation_4
+
+- You can use your own file of elevations, use a text editor like vi
+- Separate the values by spaces.
+- Arrange the values in rows and columns to determine the size of the grid.
+Example
+0 0 0 0
+0 5 2 0
+0 5 2 0
+0 0 0 0
+That will create a grid of four by four with a little bump in the middle.
+
+
 ## Tasks
 ### 0. Basics
 Isometric projection
 
 Draw a grid using an isometric projection
 
-Use SDL2
-
-#### Compilation
+#### Use SDL2
 
 ### 1. Rotation
-Rotate the grid when the user is using left or right arrows
-
-#### Compilation
-Link with the gcc -m flag to be able to use the math library
+Rotate the grid when the user press left or right arrows
 

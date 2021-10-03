@@ -51,9 +51,13 @@ typedef struct SDL_Instance
 
 int init_instance(SDL_Instance *instance, char *argv);
 void draw_function(SDL_Instance *instance);
+void drawframe(SDL_Instance *instance);
 void process_file(SDL_Instance *instance);
 int read_file(SDL_Instance *instance);
 void clear_data(SDL_Instance *instance);
+void end_x(int i, int j, float startx, float starty, SDL_Instance *instance);
+void end_y(int i, int j, float startx, float starty, SDL_Instance *instance);
+void rotate(SDL_Instance *instance, int dir);
 int poll_events();
 
 #endif /* _TERRAIN_H_ */

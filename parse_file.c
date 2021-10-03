@@ -1,5 +1,11 @@
 #include "terrain.h"
 
+/**
+* read_file - read elevation files
+* @instance: pointer
+* Return: 0
+*/
+
 int read_file(SDL_Instance *instance)
 {
 	FILE *file;
@@ -14,32 +20,26 @@ int read_file(SDL_Instance *instance)
 		fprintf(stderr, "File error\n");
 		return (1);
 	}
-
 	for (; getline(&buffer, &line, file) != -1; instance->xstep++)
 		if (instance->xstep == 0)
 		{
 			token = strtok(buffer, " \n");
 			for (; token; instance->ystep++)
-			{
 				token = strtok(NULL, " \n");
-			}
 		}
-	/* create array of points */
 	instance->data = malloc(sizeof(point *) * instance->xstep);
 	if (!instance->data)
 	{
 		fprintf(stderr, "Malloc failed, sorry\n");
-		return(1);
+		return (1);
 	}
-
 	for (i = 0; i < instance->xstep; i++)
 	{
-		/* populate */
 		instance->data[i] = malloc(sizeof(point) * instance->ystep);
 		if (!instance->data[i])
 		{
 			fprintf(stderr, "Malloc failed, y axis sorry\n");
-			return(1);
+			return (1);
 		}
 	}
 	free(buffer);
@@ -48,13 +48,18 @@ int read_file(SDL_Instance *instance)
 	return (0);
 }
 
+/**
+* process_file - create x y z coordenates
+* @instance: pointer
+*/
+
 void process_file(SDL_Instance *instance)
 {
 	FILE *file;
 	char *token;
-        int i, j;
-        size_t line = 0;
-        char *buffer = NULL;
+	int i, j;
+	size_t line = 0;
+	char *buffer = NULL;
 
 	file = fopen(instance->elevation, "r");
 	/* walk the file */
@@ -64,9 +69,9 @@ void process_file(SDL_Instance *instance)
 		for (j = 0; token; j++)
 		{
 			instance->data[i][j].x = (SCREEN_WIDTH
-				/ (instance->xstep)) * (i + 1);
-			instance->data[i][j].y = (SCREEN_HEIGHT 
-				/ (instance->ystep)) * (j + 1);
+				/ (instance->xstep + 4)) * (i + 1);
+			instance->data[i][j].y = (SCREEN_HEIGHT
+				/ (instance->ystep + 2)) * (j + 1);
 			instance->data[i][j].z = atof(token);
 
 			token = strtok(NULL, " \n");
@@ -76,6 +81,10 @@ void process_file(SDL_Instance *instance)
 	fclose(file);
 }
 
+/**
+* clear_data - Clear data
+* @instance: pointer
+*/
 
 void clear_data(SDL_Instance *instance)
 {
