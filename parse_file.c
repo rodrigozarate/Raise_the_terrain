@@ -8,7 +8,6 @@ int read_file(SDL_Instance *instance)
 	size_t line = 0;
 	char *buffer = NULL;
 
-	printf("in read\n");
 	file = fopen(instance->elevation, "r");
 	if (!file)
 	{
@@ -19,11 +18,11 @@ int read_file(SDL_Instance *instance)
 	for (; getline(&buffer, &line, file) != -1; instance->xstep++)
 		if (instance->xstep == 0)
 		{
-			printf("init tok\n");
-			token = strtok(buffer, "\n");
+			token = strtok(buffer, " \n");
 			for (; token; instance->ystep++)
+			{
 				token = strtok(NULL, " \n");
-			printf("is token: %s \n", token);
+			}
 		}
 	/* create array of points */
 	instance->data = malloc(sizeof(point *) * instance->xstep);
@@ -59,23 +58,22 @@ void process_file(SDL_Instance *instance)
 
 	file = fopen(instance->elevation, "r");
 	/* walk the file */
-	printf("in process\n");
 	for (i = 0; getline(&buffer, &line, file) != -1; i++)
 	{
 		token = strtok(buffer, " \n");
 		for (j = 0; token; j++)
 		{
 			instance->data[i][j].x = (SCREEN_WIDTH
-				/ (instance->ystep)) * (i + 1);
+				/ (instance->xstep)) * (i + 1);
 			instance->data[i][j].y = (SCREEN_HEIGHT 
-				/ (instance->xstep)) * (j + 1);
+				/ (instance->ystep)) * (j + 1);
 			instance->data[i][j].z = atof(token);
 
 			token = strtok(NULL, " \n");
 		}
 	}
 	free(buffer);
-	free(file);
+	fclose(file);
 }
 
 
@@ -83,7 +81,6 @@ void clear_data(SDL_Instance *instance)
 {
 	int i;
 
-	printf("in clear\n");
 	for (i = 0; i < instance->xstep; i++)
 	{
 		free(instance->data[i]);

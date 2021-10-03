@@ -7,11 +7,13 @@
 #ifndef SCREEN_HEIGHT
 #define SCREEN_HEIGHT 480
 #endif /* SCREEN_HEIGHT */
+#define _GNU_SOURCE
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
 * struct points - x,y,z points
