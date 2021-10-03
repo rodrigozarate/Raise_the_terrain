@@ -18,8 +18,8 @@ Link with the gcc -m flag to be able to use the math library
 `terrain <elevation>`
 There's some sample files:
  - elevation_0 Square grid eight by eoght
- - elevation_1 Rectrangle grid five by eight
- - elevation_2 Square grid no elevation
+ - elevation_1 Square grid no elevation
+ - elevation_2 Rectangle grid five by eight
  - elevation_3 two by two grid
  - elevation_4 simple square
 
