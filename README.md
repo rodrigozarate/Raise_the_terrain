@@ -17,16 +17,21 @@ Link with the gcc -m flag to be able to use the math library
 ## USAGE
 `terrain <elevation>`
 There's some sample files:
-elevation_0, elevation_1, elevation_2, elevation_3 and elevation_4
+ - elevation_0 Square grid eight by eoght
+ - elevation_1 Rectrangle grid five by eight
+ - elevation_2 Square grid no elevation
+ - elevation_3 two by two grid
+ - elevation_4 simple square
 
 - You can use your own file of elevations, use a text editor like vi
 - Separate the values by spaces.
 - Arrange the values in rows and columns to determine the size of the grid.
-Example
-0 0 0 0
-0 5 2 0
-0 5 2 0
-0 0 0 0
+#### Example
+	0 0 0 0
+	0 5 2 0
+	0 5 2 0
+	0 0 0 0
+
 That will create a grid of four by four with a little bump in the middle.
 
 
