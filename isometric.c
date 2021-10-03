@@ -12,7 +12,7 @@
 /**
 * main - Create a window to display lines
 * @argc: arguments count
-* @args: arguments
+* @argv: arguments
 * Return: 0
 */
 
@@ -56,6 +56,7 @@ int main(int argc, char **argv)
 /**
 * init_instance - Init window instance
 * @instance: pointer
+* @argv: char
 * Return: 0
 */
 
@@ -70,10 +71,8 @@ int init_instance(SDL_Instance *instance, char *argv)
 	else
 	{
 		instance->window = SDL_CreateWindow("SDL2 Isometric4",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		SCREEN_WIDTH,
-		SCREEN_HEIGHT, 0);
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 		if (instance->window == NULL)
 		{
 			printf("Window crash! SDL_Error: %s\n", SDL_GetError());
@@ -96,10 +95,8 @@ int init_instance(SDL_Instance *instance, char *argv)
 		}
 	}
 	instance->elevation = argv;
-
 	instance->data = NULL;
 	instance->xstep = 0;
 	instance->ystep = 0;
-
 	return (0);
 }
