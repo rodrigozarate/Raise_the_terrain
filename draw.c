@@ -17,10 +17,10 @@ void draw_function(SDL_Instance *instance)
 	float inclinationy;
 	float startx, starty, endx, endy;
 
-	centerx = SCREEN_WIDTH / 2.3;
-	centery = SCREEN_HEIGHT / 3.2;
-	inclinationx = 0.7;
-	inclinationy = 0.7;
+	centerx = SCREEN_WIDTH / 2;
+	centery = SCREEN_HEIGHT / 4;
+	inclinationx = 0.5;
+	inclinationy = 0.5;
 
 	SDL_SetRenderDrawColor(instance->renderer, 0x00, 0xFF, 0xFF, 0xFF);
 

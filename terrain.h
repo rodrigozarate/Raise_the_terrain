@@ -2,10 +2,10 @@
 #define _TERRAIN_H_
 
 #ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 640
+#define SCREEN_WIDTH 800
 #endif /* SCREEN_WIDTH */
 #ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 480
+#define SCREEN_HEIGHT 600
 #endif /* SCREEN_HEIGHT */
 #define _GNU_SOURCE
 
